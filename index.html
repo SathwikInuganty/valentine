@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>I Have a Question... 💕</title>
+    <title>Hey Inaya! 💕</title>
     <style>
         * {
             margin: 0;
@@ -13,19 +13,50 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden;
+            overflow-x: hidden;
+            min-height: 100vh;
         }
 
-        /* Main Screen */
-        .main-screen {
+        /* All Screens Base */
+        .screen {
             min-height: 100vh;
-            background: linear-gradient(135deg, #fecdd3, #fee2e2, #fecdd3);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             padding: 20px;
             position: relative;
+            display: none;
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        /* Screen 1 - Greeting */
+        .greeting-screen {
+            background: linear-gradient(135deg, #a78bfa, #c4b5fd, #a78bfa);
+        }
+
+        /* Screen 2 - Dinner */
+        .dinner-screen {
+            background: linear-gradient(135deg, #67e8f9, #a5f3fc, #67e8f9);
+        }
+
+        /* Screen 3 - Drumroll */
+        .drumroll-screen {
+            background: linear-gradient(135deg, #fbbf24, #fcd34d, #fbbf24);
+        }
+
+        /* Screen 4 - Valentine Question */
+        .main-screen {
+            background: linear-gradient(135deg, #fecdd3, #fee2e2, #fecdd3);
+        }
+
+        /* Screen 5 - Success */
+        .success-screen {
+            background: linear-gradient(135deg, #f472b6, #ef4444, #f472b6);
+            overflow: hidden;
         }
 
         /* Decorative Hearts */
@@ -41,32 +72,111 @@
 
         /* Card */
         .card {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             padding: 40px;
             border-radius: 30px;
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
             text-align: center;
             max-width: 450px;
             z-index: 10;
+            animation: fadeIn 0.5s ease;
         }
 
-        .bear {
-            font-size: 100px;
+        .emoji-large {
+            font-size: 80px;
             margin-bottom: 20px;
         }
 
+        .title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #6b21a8;
+            margin-bottom: 10px;
+        }
+
         .message {
-            font-size: 26px;
+            font-size: 22px;
             font-weight: bold;
             color: #db2777;
             margin-bottom: 30px;
-            min-height: 80px;
+            min-height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        /* Buttons */
+        .subtitle {
+            font-size: 18px;
+            color: #6b7280;
+            margin-bottom: 25px;
+        }
+
+        /* Option Buttons */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-btn {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: white;
+            font-weight: 600;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 15px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(139, 92, 246, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .option-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
+        }
+
+        .option-btn.teal {
+            background: linear-gradient(135deg, #14b8a6, #0d9488);
+            box-shadow: 0 5px 20px rgba(20, 184, 166, 0.3);
+        }
+
+        .option-btn.teal:hover {
+            box-shadow: 0 8px 25px rgba(20, 184, 166, 0.4);
+        }
+
+        /* Drumroll specific */
+        .drumroll-text {
+            font-size: 24px;
+            color: #92400e;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .drum-emoji {
+            font-size: 60px;
+            animation: shake 0.5s infinite;
+        }
+
+        .suspense-btn {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            font-weight: bold;
+            padding: 16px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.4);
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .suspense-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Valentine Question Buttons */
         .yes-btn {
             background: linear-gradient(135deg, #4ade80, #22c55e);
             color: white;
@@ -121,17 +231,6 @@
         }
 
         /* Success Screen */
-        .success-screen {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #f472b6, #ef4444, #f472b6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            display: none;
-        }
-
         .success-card {
             background: rgba(255, 255, 255, 0.95);
             padding: 40px;
@@ -186,6 +285,17 @@
             pointer-events: none;
         }
 
+        /* Response bubble */
+        .response {
+            background: #f3f4f6;
+            padding: 15px 20px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #374151;
+            animation: fadeIn 0.5s ease;
+        }
+
         /* Animations */
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
@@ -207,11 +317,82 @@
                 opacity: 0;
             }
         }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        .bear {
+            font-size: 100px;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
-    <!-- Main Question Screen -->
-    <div class="main-screen" id="mainScreen">
+
+    <!-- Screen 1: Greeting -->
+    <div class="screen greeting-screen active" id="greetingScreen">
+        <div class="decor-heart">✨</div>
+        <div class="decor-heart">💜</div>
+        <div class="decor-heart">✨</div>
+        <div class="decor-heart">💜</div>
+
+        <div class="card">
+            <div class="emoji-large">👋</div>
+            <div class="title">Hi Inaya!</div>
+            <div class="subtitle">Hope you had a great day! How was it?</div>
+            <div class="options">
+                <button class="option-btn" onclick="answerGreeting('It was good but a little hectic 😅')">It was good but a little hectic 😅</button>
+                <button class="option-btn" onclick="answerGreeting('Pretty good actually! 😊')">Pretty good actually! 😊</button>
+                <button class="option-btn" onclick="answerGreeting('Could have been better 😔')">Could have been better 😔</button>
+                <button class="option-btn" onclick="answerGreeting('Amazing! Best day ever! 🎉')">Amazing! Best day ever! 🎉</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 2: Dinner -->
+    <div class="screen dinner-screen" id="dinnerScreen">
+        <div class="decor-heart">🍽️</div>
+        <div class="decor-heart">✨</div>
+        <div class="decor-heart">🍽️</div>
+        <div class="decor-heart">✨</div>
+
+        <div class="card">
+            <div class="emoji-large">🍕</div>
+            <div id="greetingResponse" class="response"></div>
+            <div class="subtitle">By the way, did you have dinner yet?</div>
+            <div class="options">
+                <button class="option-btn teal" onclick="answerDinner('Yes, I already ate! 😋')">Yes, I already ate! 😋</button>
+                <button class="option-btn teal" onclick="answerDinner('Not yet, planning to soon 🍽️')">Not yet, planning to soon 🍽️</button>
+                <button class="option-btn teal" onclick="answerDinner('Just having snacks 🍿')">Just having snacks 🍿</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 3: Drumroll / Suspense -->
+    <div class="screen drumroll-screen" id="drumrollScreen">
+        <div class="decor-heart">⭐</div>
+        <div class="decor-heart">✨</div>
+        <div class="decor-heart">⭐</div>
+        <div class="decor-heart">✨</div>
+
+        <div class="card">
+            <div class="drum-emoji">🥁</div>
+            <div class="drumroll-text">Okay... now I need to ask you something very serious...</div>
+            <div id="dinnerResponse" class="response"></div>
+            <div style="font-size: 18px; color: #92400e; margin-top: 15px;">Are you ready?</div>
+            <button class="suspense-btn" onclick="showValentine()">I'm ready... 😳</button>
+        </div>
+    </div>
+
+    <!-- Screen 4: Valentine Question -->
+    <div class="screen main-screen" id="mainScreen">
         <div class="decor-heart">💕</div>
         <div class="decor-heart">💖</div>
         <div class="decor-heart">💗</div>
@@ -229,12 +410,12 @@
         <div class="counter" id="counter" style="display: none;">Escape attempts: <span id="attempts">0</span> 🏃‍♂️</div>
     </div>
 
-    <!-- Success Screen -->
-    <div class="success-screen" id="successScreen">
+    <!-- Screen 5: Success -->
+    <div class="screen success-screen" id="successScreen">
         <div class="success-card">
             <div class="success-heart">💕</div>
             <div class="success-title">YAAAAY! 🎉</div>
-            <div class="success-text">I knew you'd say yes!</div>
+            <div class="success-text">I knew you'd say yes, Inaya!</div>
             <div class="success-subtext">You just made me the happiest person ever!</div>
             <div class="success-emojis">🥰❤️🥰</div>
             <div class="success-footer">Can't wait to spend Valentine's Day with you!</div>
@@ -242,6 +423,50 @@
     </div>
 
     <script>
+        // Screen navigation
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        // Greeting answer
+        function answerGreeting(answer) {
+            let response = "";
+            if (answer.includes("hectic")) {
+                response = "Aww, hectic days can be tough! But hey, hopefully I can make your evening a little better 😊";
+            } else if (answer.includes("Pretty good")) {
+                response = "That's great to hear! Let's make it even better 😄";
+            } else if (answer.includes("Could have")) {
+                response = "I'm sorry to hear that 🥺 But don't worry, I'm here to cheer you up!";
+            } else {
+                response = "Wow, amazing! Let's keep that energy going! 🚀";
+            }
+            document.getElementById('greetingResponse').textContent = response;
+            showScreen('dinnerScreen');
+        }
+
+        // Dinner answer
+        function answerDinner(answer) {
+            let response = "";
+            if (answer.includes("already ate")) {
+                response = "Perfect! Now you have all the energy for what's coming next... 👀";
+            } else if (answer.includes("planning to")) {
+                response = "Make sure you eat well! But first... there's something important...";
+            } else {
+                response = "Snacks are valid! 🍿 Okay now... brace yourself...";
+            }
+            document.getElementById('dinnerResponse').textContent = response;
+            showScreen('drumrollScreen');
+        }
+
+        // Show Valentine screen
+        function showValentine() {
+            showScreen('mainScreen');
+        }
+
+        // Valentine question logic
         const messages = [
             "Will you be my Valentine? 💕",
             "Are you sure? Look at that YES button!",
@@ -252,7 +477,7 @@
             "The YES button is getting bigger...",
             "I promise to be adorable!",
             "Just click YES already! 😭",
-            "I'm not giving up!",
+            "I'm not giving up, Inaya!",
         ];
 
         let noAttempts = 0;
@@ -264,11 +489,8 @@
         const hintEl = document.getElementById('hint');
         const counterEl = document.getElementById('counter');
         const attemptsEl = document.getElementById('attempts');
-        const mainScreen = document.getElementById('mainScreen');
-        const successScreen = document.getElementById('successScreen');
 
         function runAway() {
-            // Move the No button to a random position
             const maxX = window.innerWidth - 120;
             const maxY = window.innerHeight - 60;
             const newX = Math.random() * maxX;
@@ -278,39 +500,31 @@
             noBtn.style.left = newX + 'px';
             noBtn.style.top = newY + 'px';
 
-            // Increase attempts
             noAttempts++;
             if (noAttempts < messages.length) {
                 messageEl.textContent = messages[noAttempts];
             }
 
-            // Make Yes button bigger
             yesScale += 0.15;
             if (yesScale > 3) yesScale = 3;
             yesBtn.style.transform = 'scale(' + yesScale + ')';
             yesBtn.style.fontSize = (18 + (yesScale - 1) * 5) + 'px';
 
-            // Make No button smaller and more transparent
             const newFontSize = Math.max(12, 16 - noAttempts);
             const newOpacity = Math.max(0.3, 1 - noAttempts * 0.08);
             noBtn.style.fontSize = newFontSize + 'px';
             noBtn.style.opacity = newOpacity;
 
-            // Show counter
             counterEl.style.display = 'block';
             attemptsEl.textContent = noAttempts;
 
-            // Show hint after 5 attempts
             if (noAttempts > 5) {
                 hintEl.style.display = 'block';
             }
         }
 
         function sayYes() {
-            mainScreen.style.display = 'none';
-            successScreen.style.display = 'flex';
-            
-            // Start floating hearts
+            showScreen('successScreen');
             setInterval(createHeart, 200);
         }
 
@@ -321,9 +535,8 @@
             heart.style.left = Math.random() * 100 + '%';
             heart.style.bottom = '-50px';
             heart.style.animationDuration = (3 + Math.random() * 2) + 's';
-            successScreen.appendChild(heart);
+            document.getElementById('successScreen').appendChild(heart);
 
-            // Remove heart after animation
             setTimeout(() => {
                 heart.remove();
             }, 5000);
