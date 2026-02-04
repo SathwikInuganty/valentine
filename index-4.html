@@ -4,8 +4,199 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>I Have a Question... 💕</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+
+        /* Main Screen */
+        .main-screen {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #fecdd3, #fee2e2, #fecdd3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* Decorative Hearts */
+        .decor-heart {
+            position: absolute;
+            opacity: 0.3;
+            animation: pulse 2s infinite;
+        }
+        .decor-heart:nth-child(1) { top: 40px; left: 40px; font-size: 60px; }
+        .decor-heart:nth-child(2) { top: 80px; right: 80px; font-size: 40px; animation: bounce 1s infinite; }
+        .decor-heart:nth-child(3) { bottom: 80px; left: 80px; font-size: 50px; }
+        .decor-heart:nth-child(4) { bottom: 40px; right: 40px; font-size: 60px; animation: bounce 1s infinite; }
+
+        /* Card */
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            max-width: 450px;
+            z-index: 10;
+        }
+
+        .bear {
+            font-size: 100px;
+            margin-bottom: 20px;
+        }
+
+        .message {
+            font-size: 26px;
+            font-weight: bold;
+            color: #db2777;
+            margin-bottom: 30px;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Buttons */
+        .yes-btn {
+            background: linear-gradient(135deg, #4ade80, #22c55e);
+            color: white;
+            font-weight: bold;
+            padding: 16px 48px;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(34, 197, 94, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .yes-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(34, 197, 94, 0.5);
+        }
+
+        .no-btn {
+            background: linear-gradient(135deg, #9ca3af, #6b7280);
+            color: white;
+            font-weight: bold;
+            padding: 12px 32px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+            transition: all 0.1s ease;
+            z-index: 20;
+        }
+
+        .hint {
+            margin-top: 25px;
+            color: #ec4899;
+            font-size: 14px;
+            font-style: italic;
+            animation: pulse 2s infinite;
+        }
+
+        .counter {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px 20px;
+            border-radius: 50px;
+            color: #db2777;
+            font-size: 14px;
+        }
+
+        /* Success Screen */
+        .success-screen {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f472b6, #ef4444, #f472b6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            display: none;
+        }
+
+        .success-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 400px;
+            z-index: 10;
+            margin: 20px;
+        }
+
+        .success-heart {
+            font-size: 100px;
+            animation: pulse 1s infinite;
+        }
+
+        .success-title {
+            font-size: 42px;
+            font-weight: bold;
+            color: #db2777;
+            margin: 20px 0;
+        }
+
+        .success-text {
+            font-size: 22px;
+            color: #374151;
+            margin-bottom: 15px;
+        }
+
+        .success-subtext {
+            font-size: 20px;
+            color: #ec4899;
+            margin-bottom: 20px;
+        }
+
+        .success-emojis {
+            font-size: 50px;
+        }
+
+        .success-footer {
+            margin-top: 25px;
+            font-size: 18px;
+            color: #6b7280;
+            font-style: italic;
+        }
+
+        /* Floating Heart */
+        .floating-heart {
+            position: fixed;
+            font-size: 35px;
+            animation: floatUp 4s ease-in forwards;
+            pointer-events: none;
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
         @keyframes floatUp {
             0% {
                 transform: translateY(0) rotate(0deg);
@@ -16,183 +207,127 @@
                 opacity: 0;
             }
         }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-        .animate-pulse-custom { animation: pulse 2s infinite; }
-        .animate-bounce-custom { animation: bounce 1s infinite; }
     </style>
 </head>
 <body>
-    <div id="app"></div>
+    <!-- Main Question Screen -->
+    <div class="main-screen" id="mainScreen">
+        <div class="decor-heart">💕</div>
+        <div class="decor-heart">💖</div>
+        <div class="decor-heart">💗</div>
+        <div class="decor-heart">💓</div>
 
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+        <div class="card">
+            <div class="bear">🧸</div>
+            <div class="message" id="message">Will you be my Valentine? 💕</div>
+            <button class="yes-btn" id="yesBtn" onclick="sayYes()">Yes! 💖</button>
+            <div class="hint" id="hint" style="display: none;">Psst... the No button is scared of commitment 😂</div>
+        </div>
 
-    <script type="text/babel">
-        const { useState, useEffect } = React;
+        <button class="no-btn" id="noBtn" onmouseenter="runAway()" ontouchstart="runAway()" onclick="runAway()">No 😢</button>
 
-        function ValentineProposal() {
-            const [noButtonStyle, setNoButtonStyle] = useState({});
-            const [yesSize, setYesSize] = useState(1);
-            const [accepted, setAccepted] = useState(false);
-            const [noAttempts, setNoAttempts] = useState(0);
-            const [hearts, setHearts] = useState([]);
+        <div class="counter" id="counter" style="display: none;">Escape attempts: <span id="attempts">0</span> 🏃‍♂️</div>
+    </div>
 
-            const messages = [
-                "Will you be my Valentine? 💕",
-                "Are you sure? Look at that YES button!",
-                "Pretty please? 🥺",
-                "I'll buy you chocolates...",
-                "And flowers too! 🌹",
-                "Come on, you know you want to!",
-                "The YES button is getting bigger...",
-                "I promise to be adorable!",
-                "Just click YES already! 😭",
-                "I'm not giving up!",
-            ];
+    <!-- Success Screen -->
+    <div class="success-screen" id="successScreen">
+        <div class="success-card">
+            <div class="success-heart">💕</div>
+            <div class="success-title">YAAAAY! 🎉</div>
+            <div class="success-text">I knew you'd say yes!</div>
+            <div class="success-subtext">You just made me the happiest person ever!</div>
+            <div class="success-emojis">🥰❤️🥰</div>
+            <div class="success-footer">Can't wait to spend Valentine's Day with you!</div>
+        </div>
+    </div>
 
-            const moveNoButton = () => {
-                const maxX = window.innerWidth - 120;
-                const maxY = window.innerHeight - 60;
-                const newX = Math.random() * maxX;
-                const newY = Math.random() * maxY;
+    <script>
+        const messages = [
+            "Will you be my Valentine? 💕",
+            "Are you sure? Look at that YES button!",
+            "Pretty please? 🥺",
+            "I'll buy you chocolates...",
+            "And flowers too! 🌹",
+            "Come on, you know you want to!",
+            "The YES button is getting bigger...",
+            "I promise to be adorable!",
+            "Just click YES already! 😭",
+            "I'm not giving up!",
+        ];
 
-                setNoButtonStyle({
-                    position: 'fixed',
-                    left: `${newX}px`,
-                    top: `${newY}px`,
-                    transition: 'all 0.1s ease',
-                });
+        let noAttempts = 0;
+        let yesScale = 1;
 
-                setYesSize(prev => Math.min(prev + 0.15, 3));
-                setNoAttempts(prev => Math.min(prev + 1, messages.length - 1));
-            };
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const messageEl = document.getElementById('message');
+        const hintEl = document.getElementById('hint');
+        const counterEl = document.getElementById('counter');
+        const attemptsEl = document.getElementById('attempts');
+        const mainScreen = document.getElementById('mainScreen');
+        const successScreen = document.getElementById('successScreen');
 
-            const handleYes = () => {
-                setAccepted(true);
-            };
+        function runAway() {
+            // Move the No button to a random position
+            const maxX = window.innerWidth - 120;
+            const maxY = window.innerHeight - 60;
+            const newX = Math.random() * maxX;
+            const newY = Math.random() * maxY;
 
-            useEffect(() => {
-                if (accepted) {
-                    const interval = setInterval(() => {
-                        setHearts(prev => {
-                            const newHeart = {
-                                id: Date.now() + Math.random(),
-                                left: Math.random() * 100,
-                                animationDuration: 3 + Math.random() * 2,
-                            };
-                            return [...prev.slice(-20), newHeart];
-                        });
-                    }, 200);
-                    return () => clearInterval(interval);
-                }
-            }, [accepted]);
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = newX + 'px';
+            noBtn.style.top = newY + 'px';
 
-            if (accepted) {
-                return (
-                    <div className="min-h-screen bg-gradient-to-br from-pink-400 via-red-400 to-pink-500 flex items-center justify-center overflow-hidden relative">
-                        {hearts.map(heart => (
-                            <div
-                                key={heart.id}
-                                className="absolute text-4xl"
-                                style={{
-                                    left: `${heart.left}%`,
-                                    animation: `floatUp ${heart.animationDuration}s ease-in forwards`,
-                                    bottom: '-50px',
-                                }}
-                            >
-                                💖
-                            </div>
-                        ))}
-
-                        <div className="text-center z-10 p-8 bg-white bg-opacity-90 rounded-3xl shadow-2xl max-w-md mx-4">
-                            <div className="text-8xl mb-6 animate-pulse-custom">💕</div>
-                            <h1 className="text-4xl font-bold text-pink-600 mb-4">
-                                YAAAAY! 🎉
-                            </h1>
-                            <p className="text-2xl text-gray-700 mb-4">
-                                I knew you'd say yes!
-                            </p>
-                            <p className="text-xl text-pink-500 mb-6">
-                                You just made me the happiest person ever!
-                            </p>
-                            <div className="text-6xl">
-                                🥰❤️🥰
-                            </div>
-                            <p className="mt-6 text-lg text-gray-600 italic">
-                                Can't wait to spend Valentine's Day with you!
-                            </p>
-                        </div>
-                    </div>
-                );
+            // Increase attempts
+            noAttempts++;
+            if (noAttempts < messages.length) {
+                messageEl.textContent = messages[noAttempts];
             }
 
-            return (
-                <div className="min-h-screen bg-gradient-to-br from-pink-200 via-red-100 to-pink-300 flex flex-col items-center justify-center p-4 overflow-hidden">
-                    <div className="absolute top-10 left-10 text-6xl animate-pulse-custom opacity-30">💕</div>
-                    <div className="absolute top-20 right-20 text-4xl animate-bounce-custom opacity-30">💖</div>
-                    <div className="absolute bottom-20 left-20 text-5xl animate-pulse-custom opacity-30">💗</div>
-                    <div className="absolute bottom-10 right-10 text-6xl animate-bounce-custom opacity-30">💓</div>
+            // Make Yes button bigger
+            yesScale += 0.15;
+            if (yesScale > 3) yesScale = 3;
+            yesBtn.style.transform = 'scale(' + yesScale + ')';
+            yesBtn.style.fontSize = (18 + (yesScale - 1) * 5) + 'px';
 
-                    <div className="text-center bg-white bg-opacity-80 p-8 rounded-3xl shadow-2xl max-w-lg mx-4 z-10">
-                        <div className="text-8xl mb-4">🧸</div>
+            // Make No button smaller and more transparent
+            const newFontSize = Math.max(12, 16 - noAttempts);
+            const newOpacity = Math.max(0.3, 1 - noAttempts * 0.08);
+            noBtn.style.fontSize = newFontSize + 'px';
+            noBtn.style.opacity = newOpacity;
 
-                        <h1 className="text-2xl md:text-3xl font-bold text-pink-600 mb-8 min-h-20">
-                            {messages[noAttempts]}
-                        </h1>
+            // Show counter
+            counterEl.style.display = 'block';
+            attemptsEl.textContent = noAttempts;
 
-                        <div className="flex flex-col items-center gap-4">
-                            <button
-                                onClick={handleYes}
-                                className="bg-gradient-to-r from-green-400 to-green-500 hover:from-green-500 hover:to-green-600 text-white font-bold py-4 px-12 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200"
-                                style={{
-                                    transform: `scale(${yesSize})`,
-                                    fontSize: `${16 + (yesSize - 1) * 4}px`,
-                                }}
-                            >
-                                Yes! 💖
-                            </button>
-                        </div>
-
-                        {noAttempts > 5 && (
-                            <p className="mt-6 text-pink-500 text-sm italic animate-pulse-custom">
-                                Psst... the No button is scared of commitment 😂
-                            </p>
-                        )}
-                    </div>
-
-                    <button
-                        onMouseEnter={moveNoButton}
-                        onTouchStart={moveNoButton}
-                        onClick={moveNoButton}
-                        className="bg-gradient-to-r from-gray-400 to-gray-500 text-white font-bold py-3 px-8 rounded-full shadow-lg mt-4 z-20"
-                        style={{
-                            ...noButtonStyle,
-                            fontSize: `${Math.max(12, 16 - noAttempts)}px`,
-                            opacity: Math.max(0.3, 1 - noAttempts * 0.08),
-                        }}
-                    >
-                        No 😢
-                    </button>
-
-                    {noAttempts > 0 && (
-                        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-white bg-opacity-70 px-4 py-2 rounded-full text-pink-600 text-sm">
-                            Escape attempts: {noAttempts} 🏃‍♂️
-                        </div>
-                    )}
-                </div>
-            );
+            // Show hint after 5 attempts
+            if (noAttempts > 5) {
+                hintEl.style.display = 'block';
+            }
         }
 
-        const root = ReactDOM.createRoot(document.getElementById('app'));
-        root.render(<ValentineProposal />);
+        function sayYes() {
+            mainScreen.style.display = 'none';
+            successScreen.style.display = 'flex';
+            
+            // Start floating hearts
+            setInterval(createHeart, 200);
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart';
+            heart.textContent = '💖';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.bottom = '-50px';
+            heart.style.animationDuration = (3 + Math.random() * 2) + 's';
+            successScreen.appendChild(heart);
+
+            // Remove heart after animation
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
     </script>
 </body>
 </html>
